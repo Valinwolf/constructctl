@@ -9,6 +9,8 @@ cp fabricator /usr/local/sbin/
 echo "installed /usr/local/sbin/fabricator"
 cp fabfunct /usr/local/lib/
 echo "installed /usr/local/lib/fabfunct"
+chmod u+x /usr/local/sbin/fabricat{e,or}
+echo "set scripts executable"
 dir=`pwd`
 cd ..
 rm -fr "$dir"
