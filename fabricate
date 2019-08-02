@@ -1,6 +1,6 @@
 #!/bin/bash
-. /usr/local/share/construct-functions
-. /usr/local/share/construct-variables
+. /usr/local/lib/fabfunct
+. /usr/local/etc/fabricator
 
 if [ "$1" == "install" ]
 then
