@@ -21,8 +21,10 @@ I don't know about anyone else out there, but I'm lazy and I like Construct. Thi
 
  
 
-`update` or `install` _takes 0 arguments_
+`update` or `install` _takes 0 or 1 arguments_
 >Updates or installs the Construct daemon
+
+ - _arg1: \[Optional] If included the value must be `--debug` and will enable a debug build_
 
 ### Unfinished Commands
 `reset` _takes 0 arguments_
