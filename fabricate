@@ -1,0 +1,64 @@
+#!/bin/bash
+. /usr/local/share/construct-functions
+. /usr/local/share/construct-variables
+
+if [ "$1" == "install" ]
+then
+	dnf install -y js js-devel boost boost-devel libsodium libsodium-devel file file-devel openssl openssl-devel jemalloc jemalloc-devel GraphicsMagick GraphicsMagick-devel zlib zlib-devel gcc automake autoconf autoconf-archive libtool
+elif [ "$1" == "help" ]
+then
+	echo "Fabricate version 0.1a"
+	echo "Commands:"
+	echo "  install [--debug]"
+	echo "     Install Construct and it's dependencies"
+	echo "     --debug will build with debug enabled"
+	echo "  freshen [--debug]"
+	echo "     Update or install Construct"
+	echo "     Note: Dependencies must be installed prior to running this"
+	echo "     --debug will build with debug enabled"
+	exit 0
+elif [ "$1" != "freshen" ]
+then
+	echo "Invalid command"
+	exit 1
+fi
+
+if [ "$2" == "--debug" ]
+then
+	EXTRAS="$EXTRAS --enable-debug --with-assert="
+fi
+
+echo -n "Creating working directory... "
+dir=`mktemp -d`
+cd $dir
+mkdir log
+logs=$dir/log
+echo "DONE"
+
+echo -n "Checking for previous installs... "
+check_state
+
+echo -n "Fetching fresh copy..."
+git clone https://github.com/jevolk/charybdis.git construct >$logs/download.log 2>&1 || error "fetching the source" &
+waitforproc $!
+cd construct
+
+echo -n "Generating config script..."
+./autogen.sh > $logs/autogen.log 2>&1 || error "generating the configuration script" &
+waitforproc $!
+
+echo -n "Configuring..."
+./configure "--prefix=$INSTALL_PREFIX" --with-included-rocksdb $EXTRAS > $logs/configure.log 2>&1 || error "configuring the build" &
+waitforproc $!
+
+echo -n "Compiling..."
+make > $logs/build.log 2>&1 || error "building construct" &
+waitforproc $!
+
+echo -n "Installing..."
+make install > $logs/install.log 2>&1 || error "installing construct" &
+waitforproc $!
+
+echo -n "Cleaning up... "
+cleanup
+echo "DONE"
