@@ -1,0 +1,5 @@
+#!/bin/bash
+INSTALL_PREFIX="/usr/local"
+RUN_PREFIX="/opt/construct"
+EXTRAS="--enable-jemalloc"
+DOMAIN="example.net"
