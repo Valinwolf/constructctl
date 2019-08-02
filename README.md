@@ -1,11 +1,11 @@
 I don't know about anyone else out there, but I'm lazy and I like Construct. This repository is for a control script that will install/update, start, stop, restart, reset your Construct server.
 
-### Installation
+## Installation
 1. git clone https://github.com/Valinwolf/constructctl.git
 2. ./install
 
 ## Usage
-### Implemented Commands
+#### Implemented Commands
 `start` _takes 0 arguments_
 >Start the Construct daemon
 
@@ -30,7 +30,7 @@ I don't know about anyone else out there, but I'm lazy and I like Construct. Thi
  
   
 
-### Unfinished Commands
+#### Unfinished Commands
 `reset` _takes 0 arguments_
 >Wipes all server config
 
