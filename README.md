@@ -2,7 +2,8 @@ I don't know about anyone else out there, but I'm lazy and I like Construct. Thi
 
 ## Installation
 1. git clone https://github.com/Valinwolf/fabricator.git
-2. ./install
+2. cd fabricator
+3. ./install
 
 ## Usage
 #### Implemented Commands
