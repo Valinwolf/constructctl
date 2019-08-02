@@ -1,0 +1,68 @@
+. /usr/local/share/construct-variables
+control_exit() {
+	sleep 3
+	daemon_running
+	if [ $? -eq $1 ]
+	then
+		echo "DONE"
+		[ "$2" != "0" ] && exit 0
+	else
+		echo "FAILED"
+		[ "$2" != "0" ] && exit 1
+	fi
+}
+daemon_running() {
+	if screen -ls | grep -q construct
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+daemon_start() {
+	if daemon_running
+	then
+		echo "Daemon already running."
+		[ "$1" != "0" ] && exit 1
+	else
+		echo -n "Starting daemon... "
+		cd "$RUN_PREFIX"
+		screen -dmS construct construct "$DOMAIN"
+		control_exit 0 "$1"
+	fi
+}
+daemon_stop() {
+	if daemon_running
+	then
+		echo -n "Stopping daemon... "
+		kill -SIGQUIT `pgrep construct`
+		control_exit 1 "$1"
+	else
+		echo "Daemon not running."
+		[ "$1" != "0" ] && exit 1
+	fi
+}
+daemon_restart() {
+	daemon_stop 0
+	daemon_start
+}
+case "$1" in
+	"start")
+		daemon_start;;
+	"stop")
+		daemon_stop;;
+	"restart")
+		daemon_restart;;
+	"update")
+		fabricate freshen "$2";;
+	"install")
+		fabricate install "$2";;
+	"reset")
+		rm -fr /opt/construct/*.{crt,crt.key,crt.key.pub,ed25519} /usr/local/var/db/construct;;
+	"set")
+		sed -i -e 's/'"${2}"'=.*/'"${2}=${3}"'/' /usr/local/share/construct-variables;;
+	*)
+		echo "Unknown command \`$1'"
+		exit 255
+		;;
+esac
