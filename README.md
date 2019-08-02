@@ -1,7 +1,7 @@
 I don't know about anyone else out there, but I'm lazy and I like Construct. This repository is for a control script that will install/update, start, stop, restart, reset your Construct server.
 
 ## Installation
-1. git clone https://github.com/Valinwolf/constructctl.git
+1. git clone https://github.com/Valinwolf/fabricator.git
 2. ./install
 
 ## Usage
@@ -27,12 +27,9 @@ I don't know about anyone else out there, but I'm lazy and I like Construct. Thi
 >_**Note:** When installing for the first time, use `install` so it installs the dependencies too._
 
  - _arg1: \[Optional] If included, the value must be `--debug` and will enable a debug build_
- 
- 
- 
-  
 
-#### Unfinished Commands
+ 
+
 `install` _takes 0 or 1 arguments_
 >Installs the Construct daemon and all it's dependencies
 
