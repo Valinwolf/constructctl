@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "Installing Fabricator v0.1a"
+mkdir -p /usr/local/{lib,etc,sbin}
+cp variables /usr/local/etc/fabricator
+echo "installed /usr/local/etc/fabricator"
+cp fabricate /usr/local/sbin/
+echo "installed /usr/local/sbin/fabricate"
+cp fabricator /usr/local/sbin/
+echo "installed /usr/local/sbin/fabricator"
+cp fabfunct /usr/local/lib/
+echo "installed /usr/local/lib/fabfunct"
+dir=`pwd`
+cd ..
+rm -fr "$dir"
+echo "deleted $dir"
