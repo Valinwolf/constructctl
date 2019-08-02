@@ -21,16 +21,25 @@ I don't know about anyone else out there, but I'm lazy and I like Construct. Thi
 
  
 
-`update` or `install` _takes 0 or 1 arguments_
+`update` or _takes 0 or 1 arguments_
 >Updates or installs the Construct daemon
+>
+>_**Note:** When installing for the first time, use `install` so it installs the dependencies too._
 
- - _arg1: \[Optional] If included the value must be `--debug` and will enable a debug build_
+ - _arg1: \[Optional] If included, the value must be `--debug` and will enable a debug build_
  
  
  
   
 
 #### Unfinished Commands
+`install` _takes 0 or 1 arguments_
+>Installs the Construct daemon and all it's dependencies
+
+ - _arg1: \[Optional] If included, the value must be `--debug` and will enable a debug build_
+
+ 
+
 `reset` _takes 0 arguments_
 >Wipes all server config
 
