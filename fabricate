@@ -4,7 +4,7 @@
 
 if [ "$1" == "install" ]
 then
-	dnf install -y js js-devel boost boost-devel libsodium libsodium-devel file file-devel openssl openssl-devel jemalloc jemalloc-devel GraphicsMagick GraphicsMagick-devel zlib zlib-devel gcc automake autoconf autoconf-archive libtool
+	dnf install -y js js-devel boost boost-devel libsodium libsodium-devel file file-devel openssl openssl-devel jemalloc jemalloc-devel GraphicsMagick GraphicsMagick-devel zlib zlib-devel gcc automake autoconf autoconf-archive libtool screen
 elif [ "$1" == "help" ]
 then
 	echo "Fabricate version 0.1a"
