@@ -1,6 +1,6 @@
 #!/bin/bash
 DOWNLOADER="curl"
-DOWNLOADER_ARGS="-L -\#"
+DOWNLOADER_ARGS="-L -#"
 BASEURL="https://raw.githubusercontent.com/Valinwolf/fabricator/master/"
 VERSION="Fabricator "
 getnettool() {
