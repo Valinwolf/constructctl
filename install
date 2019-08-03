@@ -20,13 +20,12 @@ getnettool() {
 download() {
 	if [ -f "$2" ]
 	then
-		read -p "This will overwrite '$2'. Do you want to proceed? [Yn] " ans
-		if [ "$2" == "n" ]
+		read -n 1 -p "This will overwrite '$2'. Do you want to proceed? [Yn] " ans;echo
+		if [ "$2" != "n" ] && [ "$2" != "N" ]
 		then
-			return 1
+			$DOWNLOADER $DOWNLOADER_ARGS "${BASEURL}${1}" > "${2}"
 		fi
 	fi
-	$DOWNLOADER $DOWNLOADER_ARGS "${BASEURL}${1}" > "${2}"
 }
 getversion() {
 	VERSION="$VERSION`$DOWNLOADER $DOWNLOADER_ARGS "${BASEURL}/version"`"
