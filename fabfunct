@@ -18,7 +18,6 @@ check_state() {
 			cd "$RUN_PREFIX/install/src"
 			make uninstall > "$logs/uninstall.log" 2>&1 || error "uninstalling the old copy"
 			cd "$dir"
-			rm -fr src
 		else
 			echo "    Source files not found."
 			read -p "        Source directory: " src
@@ -53,4 +52,44 @@ waitforproc() {
 		sleep 0.5
 	done
 	printf "\b. DONE\n"
+}
+
+waitforfile() {
+	i=1
+	sp="o"
+	while [ -f $1 ]
+	do
+		printf "\b$sp"
+		case "$i" in
+			"0") sp=".";i=1;;
+			"1") sp="o";i=2;;
+			"2") sp="0";i=3;;
+			"3") sp="o";i=0;;
+			*)   sp=".";i=0;;
+		esac
+		sleep 0.5
+	done
+}
+
+exitfilewait() {
+	rm -f "$1"
+	[ "$2" == "1" ] && printf "\b. FAILED\n" && error "$3"
+	[ "$2" == "0" ] && printf "\b. DONE\n"
+}
+
+get_source() {
+	cd "$RUN_PREFIX/install"
+	if [ -d src ]
+	then
+		proc=`mktemp`
+		waitforfile &
+		cd src
+		git reset --hard 2>&1 > $logs/download.log || exitfilewait "$proc" 1 "fetching the source"
+		git clean -x -f -d 2>&1 > $logs/download.log || exitfilewait "$proc" 1 "fetching the source"
+		git pull 2>&1 > $logs/download.log || exitfilewait "$proc" 1 "fetching the source"
+		exitfilewait "$proc" 0 "fetching the source"
+	else
+		git clone https://github.com/jevolk/charybdis.git src >$logs/download.log 2>&1 || error "fetching the source" &
+		waitforproc $!
+	fi
 }
