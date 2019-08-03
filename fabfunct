@@ -81,9 +81,9 @@ get_source() {
 	cd "$RUN_PREFIX/install"
 	if [ -d src ]
 	then
+		cd src
 		proc=`mktemp`
 		waitforfile &
-		cd src
 		git reset --hard 2>&1 > $logs/download.log || exitfilewait "$proc" 1 "fetching the source"
 		git clean -x -f -d 2>&1 > $logs/download.log || exitfilewait "$proc" 1 "fetching the source"
 		git pull 2>&1 > $logs/download.log || exitfilewait "$proc" 1 "fetching the source"
@@ -91,5 +91,6 @@ get_source() {
 	else
 		git clone https://github.com/jevolk/charybdis.git src >$logs/download.log 2>&1 || error "fetching the source" &
 		waitforproc $!
+		cd src
 	fi
 }
