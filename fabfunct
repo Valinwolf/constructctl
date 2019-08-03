@@ -6,9 +6,7 @@ error() {
 	logdir="$RUN_PREFIX/install_$(date | sed -e 's/  /_/g' -e 's/ /_/g')-faillogs"
 	mv $logs "$logdir"
 	echo "Logs can be found in '$logdir'"
-	echo "Cleaning up..."
 	cd ..
-	rm -fr $dir
 	exit 1
 }
 check_state() {
@@ -21,6 +19,8 @@ check_state() {
 			cdir=`pwd`
 			cd "$RUN_PREFIX/install/src"
 			make uninstall > $logs/uninstall.log 2>&1 || error "uninstalling the old copy"
+			cd ..
+			rm -fr src
 		else
 			echo "    Source files not found."
 			read -p "        Source directory: " src
@@ -37,17 +37,6 @@ check_state() {
 		echo "NOT FOUND"
 		mkdir -p "$RUN_PREFIX/install"
 	fi
-}
-cleanup() {
-	cd ..
-	if [ -d "$RUN_PREFIX/install/src" ]
-	then
-		rm -fr "$RUN_PREFIX/install/*"
-	fi
-	mv construct "$RUN_PREFIX/install/src"
-	mv $logs "$RUN_PREFIX/install/logs"
-	cd ..
-	rm -fr $dir
 }
 waitforproc() {
 	i=1
