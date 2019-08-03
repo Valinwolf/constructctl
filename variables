@@ -1,5 +1,16 @@
 #!/bin/bash
+
+### Base directory to install Construct to
 INSTALL_PREFIX="/usr/local"
+
+### Base directory to install the install files
 RUN_PREFIX="/opt/construct"
+
+### Additonal options to append to ./configure
 EXTRAS="--enable-jemalloc"
+
+### The domain to use in the username, ie @potato:example.net
 DOMAIN="example.net"
+
+### The domain to use to access the homeserver. Leave this blank to use $DOMAIN.
+ACCESS=""
