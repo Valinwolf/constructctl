@@ -1,4 +1,22 @@
 #!/bin/bash
+DOWNLOADER="curl"
+DOWNLOADER_ARGS="-L -\#"
+BASEURL="https://raw.githubusercontent.com/Valinwolf/fabricator/master/"
+VERSION="Fabricator "
+getnettool() {
+	if hash curl 2>&1 >/dev/null
+	then
+		return 0
+	elif hash wget 2>&1 >/dev/null
+	then
+		DOWNLOADER="wget"
+		DOWNLOADER_ARGS="-q --show-progress -O-"
+		return 0
+	else
+		echo "No viable download programs. Please install cURL or WGet."
+		exit 1
+	fi
+}
 download() {
 	if [ -f "$2" ]
 	then
@@ -8,19 +26,15 @@ download() {
 			return 1
 		fi
 	fi
-	baseurl="https://raw.githubusercontent.com/Valinwolf/fabricator/master/"
-	if hash curl 2>&1 >/dev/null
-	then
-		curl -L -\# "${baseurl}${1}" > "$2"
-	elif hash wget 2>&1 >/dev/null
-	then
-		wget -q --show-progress -O- "${baseurl}${1}" > "$2"
-	else
-		echo "No viable download programs. Please install cURL or WGet."
-		exit 1
-	fi
+	$DOWNLOADER $DOWNLOADER_ARGS "${BASEURL}${1}" > "${2}"
 }
-echo "Installing Fabricator v0.1a"
+getversion() {
+	VERSION="$VERSION`$DOWNLOADER $DOWNLOADER_ARGS "${BASEURL}/version"`"
+}
+getnettool
+getversion
+
+echo "Installing $VERSION"
 mkdir -p /usr/local/{lib,etc,sbin}
 
 echo "DOWNLOAD: Control Script (fabricator)"
@@ -35,11 +49,14 @@ download variables /usr/local/etc/fabricator
 echo "DOWNLOAD: Function Library (fabfunct)"
 download fabfunct /usr/local/lib/fabfunct
 
-echo "PERMISSIONS: Scripts"
-chmod u+x /usr/local/sbin/fabricat{e,or}
+echo "CREATE: Version File"
+echo "${VERSION}" > /usr/local/share/fabricator-version
 
 echo "MOVE: Installer"
 download install /usr/local/sbin/update-fabricator
+
+echo "PERMISSIONS: Scripts"
+chmod u+x /usr/local/sbin/fabricat{e,or}
 
 echo "INSTALLATION COMPLETE"
 echo "To run this script again, use '/usr/local/sbin/update-fabricator'"
