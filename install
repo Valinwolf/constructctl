@@ -55,8 +55,14 @@ echo "${VERSION}" > /usr/local/share/fabricator-version
 echo "MOVE: Installer"
 download install /usr/local/sbin/update-fabricator
 
-echo "PERMISSIONS: Scripts"
-chmod u+x /usr/local/sbin/fabricat{e,or}
+echo "PERMISSIONS: Control Script (fabricator)"
+chmod u+x /usr/local/sbin/fabricator
+
+echo "PERMISSIONS: Update Script (fabricate)"
+chmod u+x /usr/local/sbin/fabricate
+
+echo "PERMISSIONS: Updater (update-fabricator)"
+chmod u+x /usr/local/sbin/update-fabricator
 
 echo "INSTALLATION COMPLETE"
 echo "To run this script again, use '/usr/local/sbin/update-fabricator'"
