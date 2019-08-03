@@ -1,9 +1,10 @@
 I don't know about anyone else out there, but I'm lazy and I like Construct. This repository is for a control script that will install/update, start, stop, restart, reset your Construct server. Note this script is designed with ***Fedora*** in mind.
 
 ## Installation
-1. git clone https://github.com/Valinwolf/fabricator.git
-2. cd fabricator
-3. ./install
+The `cURL` method
+`bash <(curl -s 'https://raw.githubusercontent.com/Valinwolf/fabricator/master/install')`
+The `WGet` method
+`bash <(wget -qO- 'https://raw.githubusercontent.com/Valinwolf/fabricator/master/install')`
 
 ## Usage
 #### Implemented Commands
