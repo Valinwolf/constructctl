@@ -56,7 +56,3 @@ waitforproc $!
 echo -n "Installing..."
 make install > $logs/install.log 2>&1 || error "installing construct" &
 waitforproc $!
-
-echo -n "Cleaning up... "
-cleanup
-echo "DONE"
