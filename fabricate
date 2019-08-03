@@ -36,9 +36,8 @@ logs=$dir/logs
 echo -n "Checking for previous installs... "
 check_state
 
-echo -n "Fetching fresh copy..."
-git clone https://github.com/jevolk/charybdis.git src >$logs/download.log 2>&1 || error "fetching the source" &
-waitforproc $!
+echo -n "Downloading source..."
+get_source
 cd src
 
 echo -n "Generating config script..."
