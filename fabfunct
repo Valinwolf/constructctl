@@ -6,7 +6,7 @@ error() {
 	failog="$RUN_PREFIX/install_$(date | sed -e 's/  /_/g' -e 's/ /_/g')-faillogs"
 	mv "$logs" "$failog"
 	echo "Logs can be found in '$failog'"
-	exit 1
+	export FABRICATE_PROCESS_FAILED="$1"
 }
 check_state() {
 	if [ -f "$INSTALL_PREFIX/bin/construct" ]
@@ -51,7 +51,13 @@ waitforproc() {
 		esac
 		sleep 0.5
 	done
-	printf "\b. DONE\n"
+	if [ -n "$FABRICATE_PROCESS_FAILED" ]
+	then
+		printf "\b. FAILED\n"
+		exit 1
+	else
+		printf "\b. DONE\n"
+	fi
 }
 
 waitforfile() {
