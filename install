@@ -1,17 +1,45 @@
 #!/bin/bash
+download() {
+	if [ -f "$2" ]
+	then
+		read -p "This will overwrite '$2'. Do you want to proceed? [Yn] " ans
+		if [ "$2" == "n" ]
+		then
+			return 1
+		fi
+	fi
+	baseurl="https://raw.githubusercontent.com/Valinwolf/fabricator/master/"
+	if hash curl 2>&1 >/dev/null
+	then
+		curl -L -\# "${baseurl}${1}" > "$2"
+	elif hash wget 2>&1 >/dev/null
+	then
+		wget -q --show-progress -O- "${baseurl}${1}" > "$2"
+	else
+		echo "No viable download programs. Please install cURL or WGet."
+		exit 1
+	fi
+}
 echo "Installing Fabricator v0.1a"
 mkdir -p /usr/local/{lib,etc,sbin}
-cp variables /usr/local/etc/fabricator
-echo "installed /usr/local/etc/fabricator"
-cp fabricate /usr/local/sbin/
-echo "installed /usr/local/sbin/fabricate"
-cp fabricator /usr/local/sbin/
-echo "installed /usr/local/sbin/fabricator"
-cp fabfunct /usr/local/lib/
-echo "installed /usr/local/lib/fabfunct"
+
+echo "DOWNLOAD: Control Script (fabricator)"
+download fabricator /usr/local/sbin/fabricator
+
+echo "DOWNLOAD: Update Script (fabricate)"
+download fabricate /usr/local/sbin/fabricate
+
+echo "DOWNLOAD: Example Config"
+download variables /usr/local/etc/fabricator
+
+echo "DOWNLOAD: Function Library (fabfunct)"
+download fabfunct /usr/local/lib/fabfunct
+
+echo "PERMISSIONS: Scripts"
 chmod u+x /usr/local/sbin/fabricat{e,or}
-echo "set scripts executable"
-dir=`pwd`
-cd ..
-rm -fr "$dir"
-echo "deleted $dir"
+
+echo "MOVE: Installer"
+download install /usr/local/sbin/update-fabricator
+
+echo "INSTALLATION COMPLETE"
+echo "To run this script again, use '/usr/local/sbin/update-fabricator'"
