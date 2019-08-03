@@ -21,7 +21,7 @@ download() {
 	if [ -f "$2" ]
 	then
 		read -n 1 -p "This will overwrite '$2'. Do you want to proceed? [Yn] " ans;echo
-		if [ "$2" != "n" ] && [ "$2" != "N" ]
+		if [ "$ans" != "n" ] && [ "$ans" != "N" ]
 		then
 			$DOWNLOADER $DOWNLOADER_ARGS "${BASEURL}${1}" > "${2}"
 		fi
