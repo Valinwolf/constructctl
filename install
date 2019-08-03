@@ -10,7 +10,7 @@ getnettool() {
 	elif hash wget 2>&1 >/dev/null
 	then
 		DOWNLOADER="wget"
-		DOWNLOADER_ARGS="-q --show-progress -O-"
+		DOWNLOADER_ARGS="--show-progress -qO-"
 		return 0
 	else
 		echo "No viable download programs. Please install cURL or WGet."
