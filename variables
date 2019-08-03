@@ -14,3 +14,6 @@ DOMAIN="example.net"
 
 ### The domain to use to access the homeserver. Leave this blank to use $DOMAIN.
 ACCESS=""
+
+### Number of cores to utilize during build. Leave this blank to use default.
+BUILD_CORES=""
