@@ -48,7 +48,9 @@ echo -n "Configuring..."
 waitforproc $!
 
 echo -n "Compiling..."
-make > $logs/build.log 2>&1 || error "building construct" &
+buildargs=""
+[ -n "$BUILD_CORES" ] && buildargs="-j$BUILD_CORES"
+make $buildargs > $logs/build.log 2>&1 || error "building construct" &
 waitforproc $!
 
 echo -n "Installing..."
