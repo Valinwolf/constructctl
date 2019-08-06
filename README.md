@@ -1,6 +1,12 @@
 # NO LONGER IN DEVELOPMENT
 I was unable to get Construct properly working under Fedora 29 x86_64 on a DigitalOcean VPS. This script worked, however Construct did not. Matrix was something I was wanting to use, however I could not use Synapse due to the resource requirements and I spent over a week trying to get Construct working properly without any luck. One thing fixed, two things broke. As such I am moving on to a different decentralized protocol. Perhaps I will eventually get it working and I will resume developement of this script, but I will wait for Construct to become more mature.
 
+---
+
+ 
+
+
+ 
 
 This repository is for a control script that will install/update, start, stop, restart, reset your Construct server. Note this script is designed with ***Fedora*** in mind.
 
